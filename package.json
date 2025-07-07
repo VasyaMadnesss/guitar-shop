@@ -51,9 +51,11 @@
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
-    "axios": "^1.6.0",
+    "@reduxjs/toolkit": "2.8.2",
+    "axios": "1.10.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-redux": "9.2.0",
     "react-router-dom": "6.29.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0"
