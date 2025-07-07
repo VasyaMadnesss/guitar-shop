@@ -8,6 +8,16 @@ out-tsc
 # dependencies
 node_modules
 
+# misc
+Thumbs.db
+.DS_Store
+.env
+*.log*
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # IDEs and editors
 /.idea
 .project
@@ -35,8 +45,8 @@ testem.log
 /typings
 
 # System Files
-.DS_Store
-Thumbs.db
-
 .nx/cache
 .nx/workspace-data
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
