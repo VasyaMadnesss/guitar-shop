@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@guitar-shop/mocks": ["mocks/src/index.ts"],
+      "@guitar-shop/prisma": ["prisma/src/index.ts"],
       "@guitar-shop/shared": ["shared/src/index.ts"]
     }
   },

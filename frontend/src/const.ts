@@ -15,9 +15,9 @@ export enum AuthStatus {
 
 export enum ApiRoute {
   Products = '/products',
-  Login = '/login',
+  Login = 'api/auth/login',
   Logout = '/logout',
-  Registration = '/registration'
+  Registration = 'api/auth/registration'
 }
 
 export enum ProductsPageUsingCase {

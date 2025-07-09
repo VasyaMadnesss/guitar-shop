@@ -31,42 +31,42 @@ export const checkAuthAction = createAsyncThunk<
   }
 >('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
   try {
-    // await api.get(ApiRoute.Login);
+    await api.get(ApiRoute.Login);
     dispatch(requestAuthorization(AuthStatus.Auth));
   } catch {
     dispatch(requestAuthorization(AuthStatus.NoAuth));
   }
 });
 
-// export const loginAction = createAsyncThunk<
-//   void,
-//   AuthData,
-//   {
-//     dispatch: AppDispatch;
-//     state: State;
-//     extra: AxiosInstance;
-//   }
-// >(
-//   'user/login',
-//   async ({ login: email, password }, { dispatch, extra: api }) => {
-//     const {
-//       data: { token },
-//     } = await api.post<User>(ApiRoute.Login, { email, password });
-//     saveToken(token);
-//     dispatch(requestAuthorization(AuthStatus.Auth));
-//   }
-// );
+export const loginAction = createAsyncThunk<
+  void,
+  AuthData,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>(
+  'user/login',
+  async ({ login: email, password }, { dispatch, extra: api }) => {
+    const {
+      data: { token },
+    } = await api.post<User>(ApiRoute.Login, { email, password });
+    saveToken(token);
+    dispatch(requestAuthorization(AuthStatus.Auth));
+  }
+);
 
-// export const logoutAction = createAsyncThunk<
-//   void,
-//   undefined,
-//   {
-//     dispatch: AppDispatch;
-//     state: State;
-//     extra: AxiosInstance;
-//   }
-// >('user/logout', async (_arg, { dispatch, extra: api }) => {
-//   await api.delete(ApiRoute.Logout);
-//   dropToken();
-//   dispatch(requestAuthorization(AuthStatus.NoAuth));
-// });
+export const logoutAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('user/logout', async (_arg, { dispatch, extra: api }) => {
+  await api.delete(ApiRoute.Logout);
+  dropToken();
+  dispatch(requestAuthorization(AuthStatus.NoAuth));
+});
