@@ -1,4 +1,3 @@
-// eslint-disable-next-line @nx/enforce-module-boundaries
 export {
   Prisma,
   PrismaClient,
@@ -6,6 +5,6 @@ export {
   GuitarType,
   Product,
   User,
-} from './prisma-client/index.js';
+} from 'prisma-client';
 export { PrismaModule } from './prisma.module.js';
 export { PrismaService } from './prisma.service.js';
