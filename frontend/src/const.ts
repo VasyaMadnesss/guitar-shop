@@ -12,3 +12,16 @@ export enum AuthStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
+
+export enum ApiRoute {
+  Products = '/products',
+  Login = '/login',
+  Logout = '/logout',
+  Registration = '/registration'
+}
+
+export enum ProductsPageUsingCase {
+  Browse = 'browse',
+  Manage = 'manage',
+  Unknown = 'unknown',
+}

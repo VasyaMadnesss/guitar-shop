@@ -1,14 +1,15 @@
-import {createAction} from '@reduxjs/toolkit';
+import { createAction } from '@reduxjs/toolkit';
 import { AppRoute, AuthStatus } from '../../const.js';
+import { GuitarProduct } from '@guitar-shop/shared';
 
-type Data = unknown[];
+export const loadProducts = createAction<GuitarProduct[]>('data/loadProducts');
 
-export const testStore = createAction<string>('data/testStore');
+export const setLoadingStatus = createAction<boolean>('app/setLoadingStatus');
 
-export const loadData = createAction<Data>('data/loadData');
-
-export const setDataLoadingStatus = createAction<boolean>('data/setQuestionsDataLoadingStatus');
-
-export const requireAuthorization = createAction<AuthStatus>('user/requireAuthorization');
+export const requestAuthorization = createAction<AuthStatus>(
+  'user/requestAuthorization'
+);
 
 export const redirectToRoute = createAction<AppRoute>('shop/redirectToRoute');
+
+export const switchAuth = createAction('switchAuth');

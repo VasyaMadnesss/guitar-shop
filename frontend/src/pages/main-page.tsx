@@ -1,18 +1,25 @@
-import { PropsWithChildren, useEffect } from 'react';
 import { AppRoute, AuthStatus } from '../const.js';
-import { useNavigate } from 'react-router-dom';
-import { NotFoundPage } from './not-found-page.js';
+import { useNavigate, Outlet } from 'react-router-dom';
+import { useAppSelector } from '../hooks/index.js';
+import { Header } from '../components/header/header.js';
+import { Footer } from '../components/footer/footer.js';
+import { useEffect } from 'react';
 
-type MainPageProps = PropsWithChildren<{
-  authStatus: AuthStatus;
-}>;
-
-export function MainPage(props: MainPageProps) {
-  const { authStatus } = props;
+export function MainPage() {
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
   const navigate = useNavigate();
   useEffect(() => {
-    authStatus === AuthStatus.NoAuth ? navigate(AppRoute.Login) : navigate(AppRoute.Products);
-  });
-
-  return <NotFoundPage />;
+    navigate(
+      authStatus === AuthStatus.Auth
+        ? `${AppRoute.Products}/browse`
+        : AppRoute.Login
+    );
+  }, [authStatus]);
+  return (
+    <>
+      <Header />
+      <Outlet />
+      <Footer />
+    </>
+  );
 }

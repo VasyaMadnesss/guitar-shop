@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@guitar-shop/mocks": ["mocks/src/index.ts"],
       "@guitar-shop/shared": ["shared/src/index.ts"]
     }
   },

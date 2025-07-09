@@ -1,34 +1,46 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { loadData, requireAuthorization, setDataLoadingStatus, testStore } from '../actions/index.js';
+import {
+  loadProducts,
+  requestAuthorization,
+  setLoadingStatus,
+  switchAuth,
+} from '../actions/index.js';
 import { AuthStatus } from '../../const.js';
+import { GuitarProduct, User } from '@guitar-shop/shared';
 
 type InitalState = {
-  data: unknown[];
+  guitarProducts: GuitarProduct[];
+  token: string | null;
+  user: Omit<User, 'password'> | null;
   authorizationStatus: AuthStatus;
-  isDataLoading: boolean;
-  test: string;
+  isLoading: boolean;
+  errorMessage: string;
 };
 
 const initialState: InitalState = {
-  test: '',
-  data: [],
+  guitarProducts: [],
   authorizationStatus: AuthStatus.Unknown,
-  isDataLoading: false,
+  isLoading: false,
+  user: null,
+  token: '',
+  errorMessage: '',
 };
 
 const mainReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(loadData, (state, action) => {
-      state.data = action.payload;
+    .addCase(setLoadingStatus, (state, action) => {
+      state.isLoading = action.payload;
     })
-    .addCase(setDataLoadingStatus, (state, action) => {
-      state.isDataLoading = action.payload;
-    })
-    .addCase(requireAuthorization, (state, action) => {
+    .addCase(requestAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
-    .addCase(testStore, (state, action) => {
-      state.test = action.payload;
+    .addCase(loadProducts, (state, action) => {
+      state.guitarProducts = action.payload;
+    })
+    .addCase(switchAuth, (state, action) => {
+      state.authorizationStatus = state.authorizationStatus === AuthStatus.Auth
+        ? AuthStatus.NoAuth
+        : AuthStatus.Auth;
     });
 });
 
