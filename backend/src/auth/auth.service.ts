@@ -1,42 +1,61 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
-import * as bcrypt from 'bcrypt';
-import { ConfigService } from '@nestjs/config';
-import { AuthUser, JwtPayload, User } from '../types/index.js';
+import { AuthUser } from '../types/types.js';
 import { CreateUserDto } from '../users/dto/create-user.dto.js';
+import { UserRepository } from '../users/user.repository.js';
+import { UserEntity } from '../users/user.entity.js';
+import { LoginDto } from './dto/login.dto.js';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
+    private userRepository: UserRepository,
     private jwtService: JwtService,
-    private configService: ConfigService
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<User> {
-    const user: AuthUser = await this.usersService.findByEmail(email);
-
-    if (user && (await bcrypt.compare(pass, user.password))) {
-      const { password, ...result } = user;
-      return result as User;
+  async verifyUser(dto: LoginDto): Promise<UserEntity> {
+    const { email, password } = dto;
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) {
+      throw new UnauthorizedException(
+        `User with email ${email} does not exist`
+      );
     }
-
-    throw new UnauthorizedException('Invalid credentials');
+    const isPasswordValid = user.comparePassword(password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Incorrect login or password');
+    }
+    return user;
   }
 
-  async login(user: User) {
-    const payload: JwtPayload = { email: user.email, sub: user.id };
+  async createAccessToken(entity: UserEntity) {
+    const payload = entity.getJwtPayload();
     return {
-      token: this.jwtService.sign(payload, {
-        secret: this.configService.get<string>('JWT_SECRET'),
-        expiresIn: this.configService.get<string>('JWT_EXPIRES_IN'),
-      }),
+      token: this.jwtService.sign(payload),
     };
   }
 
   async register(createUserDto: CreateUserDto) {
-    const user = await this.usersService.create(createUserDto);
+    const { password, name, email } = createUserDto;
+    const unregisteredUser: AuthUser = {
+      id: '',
+      email: email,
+      name: name,
+      passwordHash: '',
+    };
+
+    const existingUser = await this.userRepository.findByEmail(email);
+
+    if (existingUser) {
+      throw new ConflictException(`User with email ${email} is already exists`);
+    }
+
+    const user = await new UserEntity(unregisteredUser).setPassword(password);
+
     return user;
   }
 }
