@@ -41,7 +41,7 @@ export class UserRepository {
 
   public async save(entity: UserEntity): Promise<void> {
     const entityPOJO = entity.toPOJO();
-    this.client.user.create({
+    await this.client.user.create({
       data: {
         name: entityPOJO.name,
         email: entityPOJO.email,

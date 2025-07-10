@@ -12,7 +12,7 @@ Content-Type: application/json
 
 # check auth
 GET http://localhost:3000/api/auth/login HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQG5vdGZvdW5kLmxvY2FsIiwic3ViIjoxLCJpYXQiOjE3NTIwNTE5MjksImV4cCI6MTc1MjA1NTUyOX0.E0VwBGsMBfEhZ9Po_amadu7VliAREnLk70on7VJgYUE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQG5vdGZvdW5kLmxvY2FsIiwic3ViIjoiM2FlNGE5ZjUtZmFlOC00ODdhLTkyMDAtM2NiZmI5NjRjNGViIiwiaWF0IjoxNzUyMTI0NTE3LCJleHAiOjE3NTIxMjgxMTd9.Q5pVkx6iLz-VIxBtRIaYnwcZ-SjRxQ6sOXhxHf27OZc
 
 ###
 

@@ -51,10 +51,12 @@ export class AuthService {
     const existingUser = await this.userRepository.findByEmail(email);
 
     if (existingUser) {
-      throw new ConflictException(`User with email ${email} is already exists`);
+      throw new ConflictException(`User with email ${email} already exists`);
     }
 
     const user = await new UserEntity(unregisteredUser).setPassword(password);
+
+    await this.userRepository.save(user);
 
     return user;
   }
