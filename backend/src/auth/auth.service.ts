@@ -36,6 +36,7 @@ export class AuthService {
     const payload = entity.getJwtPayload();
     return {
       token: this.jwtService.sign(payload),
+      name: entity.toPOJO().name,
     };
   }
 

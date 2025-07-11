@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Link } from 'react-router-dom';
 import { AuthStatus, AppRoute } from '../../const.js';
 import { useAppDispatch, useAppSelector } from '../../hooks/index.js';
-import { SyntheticEvent } from 'react';
-import { switchAuth } from '../../store/actions/index.js';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { logoutAction } from '../../store/actions/api-actions.js';
 
 const getHeaderClass = (authStatus: AuthStatus): string => {
   let additionalClass = '';
@@ -25,10 +26,40 @@ export function Header() {
   const cartCount = 0;
   const showCart = false;
 
-  const handleSwitchAuthClick = (evt: SyntheticEvent) => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const popupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
+        setIsPopupOpen(false);
+      }
+    };
+
+    if (isPopupOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [isPopupOpen]);
+
+  const handleLogoutClick = (evt: SyntheticEvent) => {
     evt.preventDefault();
-    dispatch(switchAuth());
-  }
+    dispatch(logoutAction());
+    setIsPopupOpen(false);
+  };
+
+  const handleUserIconClick = (evt: SyntheticEvent) => {
+    evt.preventDefault();
+    if (authStatus === AuthStatus.Auth) {
+      setIsPopupOpen(!isPopupOpen);
+    }
+  };
 
   const headerClass = getHeaderClass(authStatus);
   const navItems =
@@ -89,14 +120,7 @@ export function Header() {
           </Link>
 
           <nav className="main-nav">
-            <ul className="main-nav__list">
-              <li className="main-nav__item">
-                <a className="link main-nav__link" href={'#'} onClick={handleSwitchAuthClick}>
-                  Switch Auth
-                </a>
-              </li>
-              {navItems}
-            </ul>
+            <ul className="main-nav__list">{navItems}</ul>
           </nav>
 
           <div className="header__container">
@@ -104,8 +128,9 @@ export function Header() {
 
             <a
               className="header__link"
-              href="login.html"
+              href="%"
               aria-label="Перейти в личный кабинет"
+              onClick={handleUserIconClick}
             >
               <svg
                 className="header__link-icon"
@@ -115,8 +140,18 @@ export function Header() {
               >
                 <use xlinkHref="#icon-account" />
               </svg>
-              <span className="header__link-text">Вход</span>
             </a>
+
+            {authStatus === AuthStatus.Auth && isPopupOpen && (
+              <div ref={popupRef} className="user-menu-popup">
+                <button
+                  className="user-menu-popup__button"
+                  onClick={handleLogoutClick}
+                >
+                  Выйти
+                </button>
+              </div>
+            )}
 
             {showCart ?? (
               <a

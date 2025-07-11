@@ -4,6 +4,8 @@ export type {
   StringCount,
   User,
   AuthData,
+  RegisterData,
+  TokenResponse,
 } from './lib/types/guitar-shop.types.js';
 
 export {

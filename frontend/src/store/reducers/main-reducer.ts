@@ -1,9 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 import {
+  declareUserName,
   loadProducts,
   requestAuthorization,
   setLoadingStatus,
-  switchAuth,
 } from '../actions/index.js';
 import { AuthStatus } from '../../const.js';
 import { GuitarProduct, User } from '@guitar-shop/shared';
@@ -11,7 +11,7 @@ import { GuitarProduct, User } from '@guitar-shop/shared';
 type InitalState = {
   guitarProducts: GuitarProduct[];
   token: string | null;
-  user: Omit<User, 'password'> | null;
+  user: Omit<User, 'password'>;
   authorizationStatus: AuthStatus;
   isLoading: boolean;
   errorMessage: string;
@@ -21,7 +21,7 @@ const initialState: InitalState = {
   guitarProducts: [],
   authorizationStatus: AuthStatus.Unknown,
   isLoading: false,
-  user: null,
+  user: { email: '', name: '', token: '' },
   token: '',
   errorMessage: '',
 };
@@ -37,10 +37,8 @@ const mainReducer = createReducer(initialState, (builder) => {
     .addCase(loadProducts, (state, action) => {
       state.guitarProducts = action.payload;
     })
-    .addCase(switchAuth, (state, action) => {
-      state.authorizationStatus = state.authorizationStatus === AuthStatus.Auth
-        ? AuthStatus.NoAuth
-        : AuthStatus.Auth;
+    .addCase(declareUserName, (state, action) => {
+      state.user.name = action.payload;
     });
 });
 

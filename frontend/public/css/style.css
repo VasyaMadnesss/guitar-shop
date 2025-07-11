@@ -1180,7 +1180,7 @@ button,
 .header--admin .header__link:hover .header__link-text,
 .header--admin .header__link:focus .header__link-text,
 .header--admin .header__link:active .header__link-text {
-  display: none;
+  display:inline-block;
 }
 
 .header--logged .header__link:hover,
@@ -4904,4 +4904,36 @@ button,
   .page-content::after {
     background-image: url("data:image/svg+xml,%3Csvg width='1020' height='5' viewBox='0 0 1020 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1020' height='5' fill='%23131212'/%3E%3C/svg%3E%0A"), url("../img/content/bg_header@2x.png");
   }
+}
+
+.user-menu-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 100;
+  min-width: 120px;
+}
+
+.user-menu-popup__button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  width: 100%;
+  text-align: left;
+  padding: 5px 10px;
+}
+
+.user-menu-popup__button:hover {
+  color: #c90606;
+}
+
+.header__container {
+  position: relative;
 }

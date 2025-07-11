@@ -1,7 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthStatus } from '../../const.js';
-import { LoginPage } from '../../pages/login-page.js';
-import { RegistrationPage } from '../../pages/registration-page.js';
+import { AppRoute } from '../../const.js';
 import { AddProductPage } from '../../pages/product-add-page.js';
 import { EditProductPage } from '../../pages/product-edit-page.js';
 import { ProductPage } from '../../pages/product-page.js';
@@ -11,6 +9,7 @@ import { MainPage } from '../../pages/main-page.js';
 import { useAppDispatch } from '../../hooks/index.js';
 import { checkAuthAction } from '../../store/actions/api-actions.js';
 import { useEffect } from 'react';
+import { AuthPage } from '../../pages/auth-page.js';
 
 export function App() {
   const dispatch = useAppDispatch();
@@ -26,8 +25,8 @@ export function App() {
           <Route path=":mode" element={<ProductsPage />} />
         </Route>
 
-        <Route path={AppRoute.Login} element={<LoginPage />} />
-        <Route path={AppRoute.Registration} element={<RegistrationPage />} />
+        <Route path={AppRoute.Login} element={<AuthPage usingCase={AppRoute.Login} />} />
+        <Route path={AppRoute.Registration} element={<AuthPage usingCase={AppRoute.Registration} />} />
 
         <Route path={AppRoute.Product}>
           <Route index element={<NotFoundPage />} />

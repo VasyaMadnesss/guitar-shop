@@ -25,6 +25,17 @@ export type AuthData = {
   password: string;
 };
 
+export type TokenResponse = {
+  token: string;
+  name: string;
+}
+
+export type RegisterData = {
+  login: string;
+  password: string;
+  name: string;
+}
+
 
 export type User = {
   name: string;

@@ -24,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       return null;
     }
-    const { id, name } = user.toPOJO();
-    return { id, name };
+    const { name } = user.toPOJO();
+    return { name };
   }
 }

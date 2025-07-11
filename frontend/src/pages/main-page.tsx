@@ -14,6 +14,7 @@ export function MainPage() {
         ? `${AppRoute.Products}/browse`
         : AppRoute.Login
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authStatus]);
   return (
     <>

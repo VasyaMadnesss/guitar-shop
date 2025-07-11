@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AppRoute, AuthStatus } from '../../const.js';
-import { GuitarProduct } from '@guitar-shop/shared';
+import { GuitarProduct, User } from '@guitar-shop/shared';
 
 export const loadProducts = createAction<GuitarProduct[]>('data/loadProducts');
 
@@ -10,6 +10,7 @@ export const requestAuthorization = createAction<AuthStatus>(
   'user/requestAuthorization'
 );
 
-export const redirectToRoute = createAction<AppRoute>('shop/redirectToRoute');
+export const declareUserName = createAction<User['name']>('user/declareName');
 
-export const switchAuth = createAction('switchAuth');
+export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
+

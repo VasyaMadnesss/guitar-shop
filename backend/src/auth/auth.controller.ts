@@ -6,6 +6,7 @@ import {
   HttpStatus,
   UseGuards,
   Get,
+  Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
 import { LoginDto } from './dto/login.dto.js';
@@ -26,8 +27,8 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('jwt'))
   @Get('login')
-  async checkToken() {
-    return '';
+  async checkToken(@Request() req) {
+    return req.user;
   }
 
   @HttpCode(HttpStatus.OK)

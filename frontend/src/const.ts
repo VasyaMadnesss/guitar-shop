@@ -4,20 +4,20 @@ export enum AppRoute {
   Login = '/login',
   Registration = '/registration',
   Product = '/product',
-  Products = '/products'
+  Products = '/products',
 }
 
 export enum AuthStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN'
+  Unknown = 'UNKNOWN',
 }
 
 export enum ApiRoute {
   Products = '/products',
   Login = 'api/auth/login',
   Logout = '/logout',
-  Registration = 'api/auth/registration'
+  Register = 'api/auth/register',
 }
 
 export enum ProductsPageUsingCase {

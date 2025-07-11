@@ -3,7 +3,7 @@ POST http://localhost:3000/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user3@notfound.local",
+  "email": "user1@notfound.local",
   "name": "Keks",
   "password": "123456"
 }
@@ -12,7 +12,7 @@ Content-Type: application/json
 
 # check auth
 GET http://localhost:3000/api/auth/login HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQG5vdGZvdW5kLmxvY2FsIiwic3ViIjoiM2FlNGE5ZjUtZmFlOC00ODdhLTkyMDAtM2NiZmI5NjRjNGViIiwiaWF0IjoxNzUyMTI0NTE3LCJleHAiOjE3NTIxMjgxMTd9.Q5pVkx6iLz-VIxBtRIaYnwcZ-SjRxQ6sOXhxHf27OZc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQG5vdGZvdW5kLmxvY2FsIiwic3ViIjoiM2FlNGE5ZjUtZmFlOC00ODdhLTkyMDAtM2NiZmI5NjRjNGViIiwiaWF0IjoxNzUyMTg0MTQzLCJleHAiOjE3NTIxODc3NDN9.mDFMBTw7H6BzNxiN-sCZtxeYZhkm6WF7kIXeYteCyX8
 
 ###
 
