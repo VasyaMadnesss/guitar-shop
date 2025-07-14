@@ -33,7 +33,6 @@ export function CreateEditProductPage({ mode }: CreateEditProductPageProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const isEditMode = mode === 'edit';
 
-  // Инициализация состояния формы
   const [formData, setFormData] = useState({
     name: '',
     article: '',
@@ -44,14 +43,12 @@ export function CreateEditProductPage({ mode }: CreateEditProductPageProps) {
     stringCount: 4 as StringCount,
   });
 
-  // Загрузка данных для редактирования
   useEffect(() => {
     if (isEditMode && params.id) {
       dispatch(fetchOneProduct(params.id));
     }
   }, [dispatch, params.id, isEditMode]);
 
-  // Обновление формы при получении данных
   useEffect(() => {
     if (isEditMode && product) {
       setFormData({
@@ -66,7 +63,6 @@ export function CreateEditProductPage({ mode }: CreateEditProductPageProps) {
     }
   }, [product, isEditMode]);
 
-  // Превью изображения
   useEffect(() => {
     if (selectedFile) {
       const url = URL.createObjectURL(selectedFile);
@@ -77,7 +73,6 @@ export function CreateEditProductPage({ mode }: CreateEditProductPageProps) {
     }
   }, [selectedFile]);
 
-  // Обработка формы
   const handleSubmit = (data: Omit<updateFormData, 'id'>) => {
     const formData = new FormData();
 
@@ -106,7 +101,6 @@ export function CreateEditProductPage({ mode }: CreateEditProductPageProps) {
     }
   };
 
-  // Обработчики UI
   const handleChangeButtonClick = () => {
     fileInputRef.current?.click();
   };
@@ -156,7 +150,6 @@ export function CreateEditProductPage({ mode }: CreateEditProductPageProps) {
     });
   };
 
-  // Валидация формы
   const isFormValid = () => {
     return (
       formData.name.trim() !== '' &&
@@ -166,7 +159,6 @@ export function CreateEditProductPage({ mode }: CreateEditProductPageProps) {
     );
   };
 
-  // Проверки для режима редактирования
   if (isEditMode) {
     if (!params.id) return <NotFoundPage />;
     if (!product) return <div>Loading...</div>;

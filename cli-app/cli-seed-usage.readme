@@ -1,3 +1,0 @@
-Чтобы воспользоваться командой seed:
-(bash)
-npx nx run cli-app:build && node dist/cli-app/main.js --seed

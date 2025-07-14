@@ -4,7 +4,6 @@ import { useAppSelector } from '../hooks/index.js';
 import { Header } from '../components/header/header.js';
 import { Footer } from '../components/footer/footer.js';
 import { useEffect } from 'react';
-import LoadingScreen from './loading-page.js';
 
 export function MainPage() {
   const authStatus = useAppSelector((state) => state.authorizationStatus);

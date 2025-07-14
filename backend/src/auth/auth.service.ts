@@ -14,7 +14,7 @@ import { LoginDto } from './dto/login.dto.js';
 export class AuthService {
   constructor(
     private userRepository: UserRepository,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
 
   async verifyUser(dto: LoginDto): Promise<UserEntity> {
@@ -25,7 +25,7 @@ export class AuthService {
         `User with email ${email} does not exist`
       );
     }
-    const isPasswordValid = user.comparePassword(password);
+    const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Incorrect login or password');
     }

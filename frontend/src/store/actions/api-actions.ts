@@ -8,7 +8,6 @@ import {
   getProductsPageData,
   requestAuthorization,
   setError,
-  setLoadingStatus,
 } from '../actions/index.js';
 import { saveToken, dropToken } from '../token.js';
 import { ApiRoute, AuthStatus, ProductsPageApiResponse } from '../../const.js';
@@ -79,7 +78,6 @@ export const fetchProductsPageDataAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('data/fetchProducts', async (route, { getState, dispatch, extra: api }) => {
-  console.log('я фетч я работаю раз')
   const { data } = await api.get<ProductsPageApiResponse>(route);
   dispatch(getProductsPageData(data));
 });

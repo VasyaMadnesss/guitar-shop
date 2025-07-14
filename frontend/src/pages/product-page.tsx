@@ -1,9 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/index.js';
 import { fetchOneProduct } from '../store/actions/api-actions.js';
 import { NotFoundPage } from './not-found-page.js';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { GuitarType } from '@guitar-shop/shared';
+import { AppRoute, ProductsPageUsingCase } from '../const.js';
 
 function getGuitarType(type: GuitarType) {
   switch (type) {
@@ -46,17 +47,17 @@ export function ProductPage() {
         <h1 className="page-content__title title title--bigger">Товар</h1>
         <ul className="breadcrumbs page-content__breadcrumbs">
           <li className="breadcrumbs__item">
-            <a className="link" href="./main.html">
+            <Link className="link" to=''>
               Главная
-            </a>
+            </Link>
           </li>
           <li className="breadcrumbs__item">
-            <a className="link" href="./main.html">
-              Каталог
-            </a>
+            <Link className="link" to={`${AppRoute.Products}/${ProductsPageUsingCase.Manage}`}>
+              Товары
+            </Link>
           </li>
           <li className="breadcrumbs__item">
-            <a className="link">Товар</a>
+            <Link to='' className="link">Товар</Link>
           </li>
         </ul>
         <div className="product-container">

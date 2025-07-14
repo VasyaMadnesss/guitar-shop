@@ -27,20 +27,3 @@ Content-Type: application/json
 
 ###
 
-
-GET http://localhost:3000/api/products/0f5f5cc5-643c-4633-bfda HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQG5vdGZvdW5kLmxvY2FsIiwic3ViIjoiM2FlNGE5ZjUtZmFlOC00ODdhLTkyMDAtM2NiZmI5NjRjNGViIiwiaWF0IjoxNzUyNDEwNTA2LCJleHAiOjE3NTI0MTQxMDZ9.HofFcU7v-0r6p9lqeZoXLCfdh67if3OGIs-VFcgnvro
-
-# {
-#   "id": "0f5f5cc5-643c-4633-bfda-3d4232d38b03",
-#   "article": "newmegaarticle",
-#   "description": "basic-description super guitar",
-#   "guitarType": "ACOUSTIC",
-#   "name": "supermegatest123",
-#   "photo": "photo.jpg",
-#   "price": "500000",
-#   "stringCount": "4"
-# }
-
-###

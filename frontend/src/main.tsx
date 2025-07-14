@@ -1,9 +1,12 @@
 import { StrictMode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import * as ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store/index.js';
+import { checkAuthAction } from './store/actions/api-actions.js';
+import ErrorMessage from './components/error-message/error-message.js';
+
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,9 +15,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <Provider store={store}>
-    <BrowserRouter>
+      <ErrorMessage />
       <App />
-    </BrowserRouter>
     </Provider>
   </StrictMode>
 );

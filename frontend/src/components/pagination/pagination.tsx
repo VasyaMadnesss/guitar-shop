@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useCallback } from 'react';
 import classNames from 'classnames';
 
@@ -8,8 +9,8 @@ interface PaginationProps {
 }
 
 export function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
-  const handlePageClick = useCallback((page: number, e: React.MouseEvent) => {
-    e.preventDefault();
+  const handlePageClick = useCallback((page: number, evt: React.MouseEvent) => {
+    evt.preventDefault();
     if (page >= 1 && page <= totalPages && page !== currentPage) {
       onPageChange(page);
     }
@@ -25,7 +26,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
           <a
             className="link pagination__page-link"
             href="#"
-            onClick={(e) => handlePageClick(1, e)}
+            onClick={(evt) => handlePageClick(1, evt)}
           >
             1
           </a>
@@ -40,7 +41,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
           <a
             className="link pagination__page-link"
             href="#"
-            onClick={(e) => handlePageClick(currentPage - 1, e)}
+            onClick={(evt) => handlePageClick(currentPage - 1, evt)}
           >
             {currentPage - 1}
           </a>
@@ -68,7 +69,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
           <a
             className="link pagination__page-link"
             href="#"
-            onClick={(e) => handlePageClick(currentPage + 1, e)}
+            onClick={(evt) => handlePageClick(currentPage + 1, evt)}
           >
             {currentPage + 1}
           </a>
@@ -83,7 +84,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
           <a
             className="link pagination__page-link"
             href="#"
-            onClick={(e) => handlePageClick(totalPages, e)}
+            onClick={(evt) => handlePageClick(totalPages, evt)}
           >
             {totalPages}
           </a>
@@ -123,7 +124,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
           <a
             className="link pagination__page-link"
             href="#"
-            onClick={(e) => handlePageClick(currentPage + 1, e)}
+            onClick={(evt) => handlePageClick(currentPage + 1, evt)}
           >
             Далее
           </a>

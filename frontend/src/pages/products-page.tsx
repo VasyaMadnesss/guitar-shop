@@ -1,4 +1,9 @@
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { SyntheticEvent, useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/index.js';
 import { fetchProductsPageDataAction } from '../store/actions/api-actions.js';
@@ -42,7 +47,9 @@ export function ProductsPage() {
   const dispatch = useAppDispatch();
 
   const products = useAppSelector((store) => store.productsPageData.products);
-  const totalItems = useAppSelector((store) => store.productsPageData.totalItems);
+  const totalItems = useAppSelector(
+    (store) => store.productsPageData.totalItems
+  );
 
   const limit = Number(searchParams.get('limit') || 7);
   const totalPages = Math.ceil(totalItems / limit);
@@ -63,7 +70,6 @@ export function ProductsPage() {
       guitarTypes,
       stringCounts,
     };
-    console.log('Я редюсер вызываю фетч')
     dispatch(
       fetchProductsPageDataAction(
         `${ApiRoute.Products}?${new URLSearchParams(params)}`
@@ -71,17 +77,20 @@ export function ProductsPage() {
     );
   }, [dispatch, searchParams]);
 
-  const handlePageChange = useCallback((newPage: number) => {
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set('page', String(newPage));
-    setSearchParams(newSearchParams);
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set('page', String(newPage));
+      setSearchParams(newSearchParams);
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [searchParams, setSearchParams]);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+    [searchParams, setSearchParams]
+  );
 
   const handleCreateNewProductButton = (evt: SyntheticEvent) => {
     navigate(`${AppRoute.Product}/add`);
-  }
+  };
 
   let usingCase = ProductsPageUsingCase.Unknown;
   if (mode) {
@@ -95,12 +104,12 @@ export function ProductsPage() {
           <h1 className="product-list__title">Список товаров</h1>
           <ul className="breadcrumbs">
             <li className="breadcrumbs__item">
-              <a className="link" href='#' aria-disabled>
+              <Link className="link" to=''>
                 Вход
-              </a>
+              </Link>
             </li>
             <li className="breadcrumbs__item">
-              <a className="link">Товары</a>
+              <Link className="link" to=''>Товары</Link>
             </li>
           </ul>
           <div className="catalog">

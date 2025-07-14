@@ -63,7 +63,7 @@ export function Header() {
 
   const headerClass = getHeaderClass(authStatus);
   const navItems =
-    authStatus === AuthStatus.Auth ? ( // список своих товаров vs где купить ?
+    authStatus === AuthStatus.Auth ? (
       <>
         <li className="main-nav__item">
           <Link

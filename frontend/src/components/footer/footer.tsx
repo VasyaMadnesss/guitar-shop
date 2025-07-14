@@ -1,10 +1,13 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const.js';
+
 export function Footer() {
   return (
     <footer className="footer">
       <div className="container">
         <div className="footer__container">
           <div className="footer__logo-wrapper">
-            <a className="footer__logo logo" href="main.html">
+            <Link className="footer__logo logo" to={`${AppRoute.Root}`}>
               <img
                 className="logo__img"
                 width={70}
@@ -12,7 +15,7 @@ export function Footer() {
                 src="/img/svg/logo.svg"
                 alt="Логотип"
               />
-            </a>
+            </Link>
             <div className="socials footer__socials">
               <ul className="socials__list">
                 <li className="socials-item">
