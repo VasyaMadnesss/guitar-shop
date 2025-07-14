@@ -28,14 +28,13 @@ export type AuthData = {
 export type TokenResponse = {
   token: string;
   name: string;
-}
+};
 
 export type RegisterData = {
   login: string;
   password: string;
   name: string;
-}
-
+};
 
 export type User = {
   name: string;
@@ -44,12 +43,17 @@ export type User = {
   token: string;
 };
 
-export type GuitarType = 'электро' | 'акустика' | 'укулеле';
+export enum GuitarType {
+  Electro = 'ELECTRO',
+  Acoustic = 'ACOUSTIC',
+  Ukulele = 'UKULELE',
+}
+
 export type StringCount = 4 | 6 | 7 | 12;
 
 export type GuitarProduct = {
   name: string;
-  descriptipn: string;
+  description: string;
   addedDate: string;
   photo: string;
   guitarType: GuitarType;

@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../hooks/index.js';
 import { checkAuthAction } from '../../store/actions/api-actions.js';
 import { useEffect } from 'react';
 import { AuthPage } from '../../pages/auth-page.js';
+import LoadingScreen from '../../pages/loading-page.js';
 
 export function App() {
   const dispatch = useAppDispatch();
@@ -19,14 +20,21 @@ export function App() {
   return (
     <Routes>
       <Route path={AppRoute.Root} element={<MainPage />}>
-
         <Route path={AppRoute.Products}>
           <Route index element={<NotFoundPage />} />
           <Route path=":mode" element={<ProductsPage />} />
         </Route>
 
-        <Route path={AppRoute.Login} element={<AuthPage usingCase={AppRoute.Login} />} />
-        <Route path={AppRoute.Registration} element={<AuthPage usingCase={AppRoute.Registration} />} />
+        <Route path={AppRoute.Loading} element={<LoadingScreen />} />
+
+        <Route
+          path={AppRoute.Login}
+          element={<AuthPage usingCase={AppRoute.Login} />}
+        />
+        <Route
+          path={AppRoute.Registration}
+          element={<AuthPage usingCase={AppRoute.Registration} />}
+        />
 
         <Route path={AppRoute.Product}>
           <Route index element={<NotFoundPage />} />

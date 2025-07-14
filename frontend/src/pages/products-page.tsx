@@ -1,50 +1,93 @@
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { SyntheticEvent, useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/index.js';
-import { fetchProductsAction } from '../store/actions/api-actions.js';
+import { fetchProductsPageDataAction } from '../store/actions/api-actions.js';
 import { GuitarProduct } from '@guitar-shop/shared';
 import { ProductCard } from '../components/product-card/product-card.js';
 import { Filters } from '../components/filters/filters.js';
-import { ProductsPageUsingCase } from '../const.js';
-
+import {
+  ApiRoute,
+  AppRoute,
+  ProductsPageUsingCase,
+  SortBy,
+  SortOrder,
+} from '../const.js';
+import { Sorting } from '../components/sorting/sorting.js';
+import { Pagination } from '../components/pagination/pagination.js';
 
 function renderProductCards(
   products: GuitarProduct[],
   usingCase: ProductsPageUsingCase
 ) {
-  return products.map((value) => {
-    return <ProductCard product={value} usingCase={usingCase} />;
-  });
+  return products.map((value) => (
+    <ProductCard key={value.id} product={value} usingCase={usingCase} />
+  ));
 }
 
 function getUsingCase(mode: string) {
-  let usingCase: ProductsPageUsingCase = ProductsPageUsingCase.Unknown;
-
   if (mode === ProductsPageUsingCase.Browse) {
-    usingCase = ProductsPageUsingCase.Browse;
+    return ProductsPageUsingCase.Browse;
   }
-
   if (mode === ProductsPageUsingCase.Manage) {
-    usingCase = ProductsPageUsingCase.Manage;
+    return ProductsPageUsingCase.Manage;
   }
-  return usingCase;
+  return ProductsPageUsingCase.Unknown;
 }
 
 export function ProductsPage() {
   const { mode } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const products = useAppSelector((store) => store.productsPageData.products);
+  const totalItems = useAppSelector((store) => store.productsPageData.totalItems);
+
+  const limit = Number(searchParams.get('limit') || 7);
+  const totalPages = Math.ceil(totalItems / limit);
+  const currentPage = Number(searchParams.get('page') || 1);
+
   useEffect(() => {
-    dispatch(fetchProductsAction());
-  }, [dispatch]);
+    const page = searchParams.get('page') || '1';
+    const limit = searchParams.get('limit') || '7';
+    const sortBy = searchParams.get('sortBy') || SortBy.AddedDate;
+    const sortOrder = searchParams.get('sortOrder') || SortOrder.Desc;
+    const guitarTypes = searchParams.get('guitarTypes') || '';
+    const stringCounts = searchParams.get('stringCounts') || '';
+    const params = {
+      page,
+      limit,
+      sortBy,
+      sortOrder,
+      guitarTypes,
+      stringCounts,
+    };
+    console.log('Я редюсер вызываю фетч')
+    dispatch(
+      fetchProductsPageDataAction(
+        `${ApiRoute.Products}?${new URLSearchParams(params)}`
+      )
+    );
+  }, [dispatch, searchParams]);
 
-  const products = useAppSelector((store) => store.guitarProducts);
+  const handlePageChange = useCallback((newPage: number) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set('page', String(newPage));
+    setSearchParams(newSearchParams);
 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [searchParams, setSearchParams]);
+
+  const handleCreateNewProductButton = (evt: SyntheticEvent) => {
+    navigate(`${AppRoute.Product}/add`);
+  }
 
   let usingCase = ProductsPageUsingCase.Unknown;
   if (mode) {
     usingCase = getUsingCase(mode);
   }
+
   return (
     <main className="page-content">
       <section className="product-list">
@@ -52,7 +95,7 @@ export function ProductsPage() {
           <h1 className="product-list__title">Список товаров</h1>
           <ul className="breadcrumbs">
             <li className="breadcrumbs__item">
-              <a className="link" href="./main.html">
+              <a className="link" href='#' aria-disabled>
                 Вход
               </a>
             </li>
@@ -61,71 +104,44 @@ export function ProductsPage() {
             </li>
           </ul>
           <div className="catalog">
-            <Filters />
-            <div className="catalog-sort">
-              <h2 className="catalog-sort__title">Сортировать:</h2>
-              <div className="catalog-sort__type">
-                <button
-                  className="catalog-sort__type-button catalog-sort__type-button--active"
-                  aria-label="по цене"
-                >
-                  по дате
-                </button>
-                <button
-                  className="catalog-sort__type-button"
-                  aria-label="по цене"
-                >
-                  по цене
-                </button>
-              </div>
-              <div className="catalog-sort__order">
-                <button
-                  className="catalog-sort__order-button catalog-sort__order-button--up"
-                  aria-label="По возрастанию"
-                />
-                <button
-                  className="catalog-sort__order-button catalog-sort__order-button--down catalog-sort__order-button--active"
-                  aria-label="По убыванию"
-                />
-              </div>
-            </div>
+            <Filters
+              setSearchParams={setSearchParams}
+              urlParams={searchParams}
+            />
+            <Sorting
+              setSearchParams={setSearchParams}
+              urlParams={searchParams}
+            />
             <div className="catalog-cards">
-              <ul className="catalog-cards__list">
-                {renderProductCards(products, usingCase)}
-              </ul>
+              {products.length > 0 ? (
+                <ul className="catalog-cards__list">
+                  {renderProductCards(products, usingCase)}
+                </ul>
+              ) : (
+                <div className="catalog-cards__empty">
+                  <p>Товары не найдены</p>
+                </div>
+              )}
             </div>
           </div>
-          {usingCase === ProductsPageUsingCase.Manage ? (
-            <button className="button product-list__button button--red button--big">
+          {usingCase === ProductsPageUsingCase.Manage && (
+            <button
+              className="button product-list__button button--red button--big"
+              onClick={handleCreateNewProductButton}
+            >
               Добавить новый товар
             </button>
-          ) : (
-            ''
           )}
-          <div className="pagination product-list__pagination">
-            <ul className="pagination__list">
-              <li className="pagination__page pagination__page--active">
-                <a className="link pagination__page-link" href={'1'}>
-                  1
-                </a>
-              </li>
-              <li className="pagination__page">
-                <a className="link pagination__page-link" href={'2'}>
-                  2
-                </a>
-              </li>
-              <li className="pagination__page">
-                <a className="link pagination__page-link" href={'3'}>
-                  3
-                </a>
-              </li>
-              <li className="pagination__page pagination__page--next" id="next">
-                <a className="link pagination__page-link" href={'2'}>
-                  Далее
-                </a>
-              </li>
-            </ul>
-          </div>
+
+          {totalPages > 1 && (
+            <div className="pagination product-list__pagination">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
         </div>
       </section>
     </main>
